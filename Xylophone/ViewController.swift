@@ -19,11 +19,21 @@ class ViewController: UIViewController {
 
     @IBAction func keyPressed(_ sender: UIButton) {
         
-        print(sender.titleLabel?.text)
-        var soundName = (sender.titleLabel?.text)!
+        // Dim the button
+        sender.alpha = 0.5
         
+        // Get the sound name
+        guard let soundName = sender.titleLabel?.text else { return }
+
+        // Play the sound
         playSound(soundName: soundName)
+
+        // Delay for 0.2 seconds before restoring the button's opacity
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            sender.alpha = 1.0
+        }
     }
+
     
     func playSound(soundName : String) {
         guard let url = Bundle.main.url(forResource: soundName, withExtension: "wav") else { return }
